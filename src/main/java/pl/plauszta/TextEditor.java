@@ -1,5 +1,7 @@
 package pl.plauszta;
 
+import com.github.weisj.darklaf.LafManager;
+import com.github.weisj.darklaf.theme.DarculaTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.plauszta.component.CheckBox;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class TextEditor extends JFrame {
 
@@ -26,18 +29,17 @@ public class TextEditor extends JFrame {
         initWindow();
         final JTextField textSearch = new SearchField();
         final JTextArea textArea = new JTextArea();
-        textArea.setName("TextArea");
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setName("ScrollPane");
-        scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        JFileChooser chooser = initChooser();
         searchAction = new SearchAction(textSearch, textArea);
-
         JRadioButtonMenuItem regexItem = new JRadioButtonMenuItem("Use regular expressions");
         JCheckBox checkBox = new CheckBox(regexItem, searchAction);
-
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        JFileChooser chooser = initChooser();
         JPanel panel = new SearchPanel(chooser, textArea, textSearch, checkBox, searchAction);
+
+        textArea.setName("TextArea");
+        textArea.setLineWrap(true);
+        scrollPane.setName("ScrollPane");
+        scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         initMenuBar(textArea, chooser, checkBox, regexItem);
         add(panel, BorderLayout.NORTH);
@@ -47,9 +49,11 @@ public class TextEditor extends JFrame {
     }
 
     private void initWindow() {
+        LafManager.install(new DarculaTheme());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 300);
         setTitle("Text Editor");
+        setIconImage(new ImageIcon(Objects.requireNonNull(TextEditor.class.getClassLoader().getResource("icon.png"))).getImage());
         Dimension displaySize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(new Point(displaySize.width / 2 - 250, displaySize.height / 2 - 150));
     }

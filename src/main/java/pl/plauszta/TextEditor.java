@@ -85,16 +85,18 @@ public class TextEditor extends JFrame {
         textArea.setText(null);
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             textArea.setText(new String(fileInputStream.readAllBytes()));
+            log.info("File opened. File: {}", file.getName());
         } catch (IOException ex) {
-            log.error(String.format("Cannot load file: %s", file.getName()), ex);
+            log.error("Cannot load file: {}", file.getName(), ex);
         }
     }
 
     public static void saveFile(File file, JTextArea textArea) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             fileOutputStream.write(textArea.getText().getBytes());
+            log.info("File saved. File: {}", file.getName());
         } catch (IOException ex) {
-            log.error(String.format("Cannot load file: %s", file.getName()), ex);
+            log.error("Cannot save file: {}", file.getName(), ex);
         }
     }
 }

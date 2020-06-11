@@ -1,4 +1,4 @@
-## TextEditor 📝✏
+# TextEditor 📝✏
 Program allows writing, opening and saving 
 text files.
 

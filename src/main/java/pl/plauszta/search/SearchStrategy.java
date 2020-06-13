@@ -7,6 +7,8 @@ abstract class SearchStrategy {
     protected AtomicInteger index = new AtomicInteger(-1);
     protected JTextArea textArea;
     protected JTextField searchField;
+    protected int selectionStart;
+    protected int selectionEnd;
 
     SearchStrategy(JTextArea textArea, JTextField searchField) {
         this.textArea = textArea;
@@ -18,4 +20,10 @@ abstract class SearchStrategy {
     abstract void findNext();
 
     abstract void findPrev();
+
+    void selectText() {
+        textArea.setCaretPosition(selectionEnd);
+        textArea.select(selectionStart, selectionEnd);
+        textArea.grabFocus();
+    }
 }

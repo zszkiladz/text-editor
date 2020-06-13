@@ -14,10 +14,13 @@ public class SimpleSearch extends SearchStrategy {
         final String found = searchField.getText();
         index.set(text.indexOf(found));
         if (index.get() != -1) {
-            textArea.setCaretPosition(index.get() + found.length());
-            textArea.select(index.get(), index.get() + found.length());
-            textArea.grabFocus();
+            changeSelectBoundaries(found);
         }
+    }
+
+    private void changeSelectBoundaries(String found) {
+        selectionStart = index.get();
+        selectionEnd = selectionStart + found.length();
     }
 
     @Override
@@ -29,9 +32,7 @@ public class SimpleSearch extends SearchStrategy {
             index.set(text.indexOf(found));
         }
         if (index.get() != -1) {
-            textArea.setCaretPosition(index.get() + found.length());
-            textArea.select(index.get(), index.get() + found.length());
-            textArea.grabFocus();
+            changeSelectBoundaries(found);
         }
     }
 
@@ -44,9 +45,7 @@ public class SimpleSearch extends SearchStrategy {
             index.set(text.lastIndexOf(found));
         }
         if (index.get() != -1) {
-            textArea.setCaretPosition(index.get() + found.length());
-            textArea.select(index.get(), index.get() + found.length());
-            textArea.grabFocus();
+            changeSelectBoundaries(found);
         }
     }
 }

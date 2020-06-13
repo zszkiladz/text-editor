@@ -21,10 +21,13 @@ class RegexSearch extends SearchStrategy {
             index.set(matcher.start());
         }
         if (index.get() != -1) {
-            textArea.setCaretPosition(matcher.end());
-            textArea.select(matcher.start(), matcher.end());
-            textArea.grabFocus();
+            changeSelectBoundaries(matcher);
         }
+    }
+
+    private void changeSelectBoundaries(Matcher matcher) {
+        selectionEnd = matcher.end();
+        selectionStart = matcher.start();
     }
 
     @Override
@@ -43,9 +46,7 @@ class RegexSearch extends SearchStrategy {
             }
         }
         if (index.get() != -1) {
-            textArea.setCaretPosition(matcher.end());
-            textArea.select(matcher.start(), matcher.end());
-            textArea.grabFocus();
+            changeSelectBoundaries(matcher);
         }
     }
 
@@ -69,9 +70,7 @@ class RegexSearch extends SearchStrategy {
         matcher.region(index.get() == -1 ? 0 : index.get(), text.length());
         matcher.find();
         if (index.get() != -1) {
-            textArea.setCaretPosition(matcher.end());
-            textArea.select(matcher.start(), matcher.end());
-            textArea.grabFocus();
+            changeSelectBoundaries(matcher);
         }
     }
 

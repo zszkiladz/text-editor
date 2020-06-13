@@ -7,6 +7,8 @@ import pl.plauszta.component.button.ButtonIcon;
 import pl.plauszta.component.button.LoadButton;
 import pl.plauszta.component.button.SaveButton;
 import pl.plauszta.search.SearchAction;
+import pl.plauszta.search.SearchMethod;
+import pl.plauszta.search.SearchWorker;
 
 import javax.swing.*;
 
@@ -21,19 +23,19 @@ public class SearchPanel extends JPanel {
         JButton searchButton = new Button(new ButtonIcon(SearchPanel.class.getClassLoader().getResource("search.png")), "StartSearchButton");
         searchButton.addActionListener(actionEvent -> {
             log.info("Searching: {}", textSearch.getText());
-            searchAction.findFirst();
+            new SearchWorker(searchAction, SearchMethod.FIRST).execute();
         });
 
         JButton nextButton = new Button(new ButtonIcon(SearchPanel.class.getClassLoader().getResource("right-arrow.png")), "NextMatchButton");
         nextButton.addActionListener(actionEvent -> {
             log.info("Searching next: {}", textSearch.getText());
-            searchAction.findNext();
+            new SearchWorker(searchAction, SearchMethod.NEXT).execute();
         });
 
         JButton prevButton = new Button(new ButtonIcon(SearchPanel.class.getClassLoader().getResource("left-arrow.png")), "PreviousMatchButton");
         prevButton.addActionListener(actionEvent -> {
             log.info("Searching previous: {}", textSearch.getText());
-            searchAction.findPrevious();
+            new SearchWorker(searchAction, SearchMethod.PREVIOUS).execute();
         });
 
         this.add(new SaveButton(chooser, textArea, "SaveButton"));
